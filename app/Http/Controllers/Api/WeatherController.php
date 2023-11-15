@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class WeatherController extends Controller
 {
-    public function __invoke($city)
+    public function __invoke(string $city): mixed
     {
         $coordinates = config('app.cities.'.$city);
 

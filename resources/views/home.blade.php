@@ -72,8 +72,8 @@
 
     @section('scripts')
         <script>
-            function weather() {
-                return {
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('weather', () => ({
                     city: '',
                     weather: {},
                     loading: false,
@@ -99,8 +99,8 @@
                                 this.loading = false
                             })
                     }
-                }
-            }
+                }))
+            })
         </script>
     @endsection
 </x-app-layout>

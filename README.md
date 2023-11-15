@@ -22,3 +22,4 @@ Demo project, showcasing the [Alpine.js](https://alpinejs.dev/) and external API
 - Check out our adminpanel generator [QuickAdminPanel](https://quickadminpanel.com)
 - Purchase our [Livewire Kit](https://livewirekit.com)
 - Subscribe to our [YouTube channel Laravel Daily](https://www.youtube.com/channel/UCTuplgOBi6tJIlesIboymGA)
+
