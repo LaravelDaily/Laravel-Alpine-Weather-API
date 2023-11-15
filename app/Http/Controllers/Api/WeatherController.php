@@ -11,13 +11,22 @@ class WeatherController extends Controller
 {
     public function __invoke(string $city): mixed
     {
-        $coordinates = config('app.cities.'.$city);
+        return Cache::remember('city' . $city, 60 * 5, function () use ($city) {
+            $response = Http::withHeaders([
+                'X-Api-Key' => config('services.api_ninjas.key'),
+            ])
+                ->get('https://api.api-ninjas.com/v1/city?name=' . $city);
 
-        return Cache::remember('city' . $city, 60 * 5, function() use ($coordinates) {
-            $response = Http::get('https://api.open-meteo.com/v1/forecast?latitude='.$coordinates['lat'].'&longitude='.$coordinates['lng'].'&daily=temperature_2m_max,temperature_2m_min&timezone=UTC');
+            if ($response->successful() && ! empty($response->json())) {
+                $city = $response->json(0);
 
-            if ($response->successful()) {
-                return $response->json('daily');
+                $weather = Http::get('https://api.open-meteo.com/v1/forecast?latitude=' . $city['latitude'] . '&longitude=' . $city['longitude'] . '&daily=temperature_2m_max,temperature_2m_min&timezone=UTC');
+
+                if ($weather->successful()) {
+                    return $weather->json('daily');
+                }
+
+                return response()->json([]);
             }
 
             return response()->json([]);

@@ -10,14 +10,13 @@
             <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                 <div x-data="weather()"
                      class="p-6 bg-white border-b border-gray-200">
-                    <div class="flex items-center">
-                        <select x-model="city" @change="getWeather()"
-                                class="flex-1 ml-4 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            <option value="">-- Select city --</option>
-                            @foreach(config('app.cities') as $key => $name)
-                                <option value="{{ $key }}">{{ Str::title($key) }}</option>
-                            @endforeach
-                        </select>
+                    <div class="flex flex-col space-y-1">
+                        <x-input x-model="city" class="flex-1" placeholder="Enter city name" />
+                        <div>
+                            <x-button @click="getWeather()">
+                                Submit
+                            </x-button>
+                        </div>
                     </div>
 
                     <template x-if="loading">
